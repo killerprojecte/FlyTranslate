@@ -1,7 +1,6 @@
 name: FlyTranslate
 version: '${version}'
 main: flyproject.flytranslate.FlyTranslate
-api-version: 1.13
 softdepend: [ AmazingBot, MiraiMC ]
 authors: [ FlyProject ]
 description: Translate in qq
