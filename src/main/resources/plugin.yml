@@ -4,3 +4,10 @@ main: flyproject.flytranslate.FlyTranslate
 softdepend: [ AmazingBot, MiraiMC ]
 authors: [ FlyProject ]
 description: Translate in qq
+commands:
+  flytranslate:
+    permission: flytranslate.use
+  translate:
+    permission: flytranslate.use
+  transl:
+    permission: flytranslate.use

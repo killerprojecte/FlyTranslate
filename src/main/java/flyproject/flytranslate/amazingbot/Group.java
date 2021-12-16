@@ -1,6 +1,7 @@
 package flyproject.flytranslate.amazingbot;
 
 import flyproject.flytranslate.GoogleTranslateAPI;
+import flyproject.flytranslate.LanguageAPI;
 import me.albert.amazingbot.events.GroupMessageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +12,7 @@ public class Group implements Listener {
         String msg = event.getMsg();
         GoogleTranslateAPI translateAPI = new GoogleTranslateAPI();
         try {
-            if (msg.startsWith("南非荷兰语 ")) {
+            /*if (msg.startsWith("南非荷兰语 ")) {
                 msg = msg.replace("南非荷兰语 ", "");
                 String transword = translateAPI.translateText(msg, "af");
                 event.response(transword);
@@ -443,6 +444,34 @@ public class Group implements Listener {
                 msg = msg.replace("祖鲁语 ", "");
                 String transword = translateAPI.translateText(msg, "zu");
                 event.response(transword);
+            }*/
+            //1.1.0 使用语言列表
+            for (String key : LanguageAPI.map.keySet()){
+                if (msg.startsWith(key)){
+                    msg = msg.replace(key + " ", "");
+                    String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
+                    event.response(transword);
+                }
+            }
+        } catch (Exception e) {
+            event.response("未知错误 详细信息请查看控制台");
+            e.printStackTrace();
+        }
+    }
+    @EventHandler
+    public void GroupSend(GroupMessageEvent event){
+        String msg = event.getMsg();
+        GoogleTranslateAPI translateAPI = new GoogleTranslateAPI();
+        try {
+            if (msg.startsWith("发送翻译 ")){
+                msg = msg.replace("发送翻译 ","");
+                for (String key : LanguageAPI.map.keySet()){
+                    if (msg.startsWith(key)){
+                        msg = msg.replace(key + " ", "");
+                        String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
+                        event.response(transword);
+                    }
+                }
             }
         } catch (Exception e) {
             event.response("未知错误 详细信息请查看控制台");

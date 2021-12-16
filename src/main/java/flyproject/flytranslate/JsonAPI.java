@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
 public class JsonAPI {
+    //解析json
     public static String getTranslateWord(String json){
         String resultStr = json;
         JsonParser jp = new JsonParser();

@@ -2,6 +2,8 @@ package flyproject.flytranslate;
 
 import flyproject.flytranslate.amazingbot.Group;
 import flyproject.flytranslate.amazingbot.Private;
+import flyproject.flytranslate.bukkit.TranslateTab;
+import flyproject.flytranslate.bukkit.TCommand;
 import flyproject.flytranslate.miraimc.MGroup;
 import flyproject.flytranslate.miraimc.MPrivate;
 import org.bukkit.Bukkit;
@@ -38,7 +40,18 @@ public final class FlyTranslate extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
+        getLogger().info("初始化语言列表");
+        LanguageAPI.setMap();
+        getLogger().info("注册翻译命令");
+        getCommand("flytranslate").setTabCompleter(new TranslateTab());
+        getCommand("flytranslate").setExecutor(new TCommand());
+        getCommand("translate").setTabCompleter(new TranslateTab());
+        getCommand("translate").setExecutor(new TCommand());
+        getCommand("transl").setTabCompleter(new TranslateTab());
+        getCommand("transl").setExecutor(new TCommand());
     }
+
+
 
     @Override
     public void onDisable() {

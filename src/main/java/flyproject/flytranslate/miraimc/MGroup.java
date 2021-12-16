@@ -1,6 +1,8 @@
 package flyproject.flytranslate.miraimc;
 
 import flyproject.flytranslate.GoogleTranslateAPI;
+import flyproject.flytranslate.LanguageAPI;
+import me.albert.amazingbot.events.GroupMessageEvent;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.bukkit.event.MiraiGroupMessageEvent;
 import org.bukkit.event.EventHandler;
@@ -12,7 +14,7 @@ public class MGroup implements Listener {
         String msg = event.getMessage();
         GoogleTranslateAPI translateAPI = new GoogleTranslateAPI();
         try {
-            if (msg.startsWith("南非荷兰语 ")) {
+            /*if (msg.startsWith("南非荷兰语 ")) {
                 msg = msg.replace("南非荷兰语 ", "");
                 String transword = translateAPI.translateText(msg, "af");
                 MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage(transword);
@@ -444,6 +446,34 @@ public class MGroup implements Listener {
                 msg = msg.replace("祖鲁语 ", "");
                 String transword = translateAPI.translateText(msg, "zu");
                 MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage(transword);
+            }*/
+            //1.1.0
+            for (String key : LanguageAPI.map.keySet()){
+                if (msg.startsWith(key)){
+                    msg = msg.replace(key + " ", "");
+                    String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
+                    MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage(transword);
+                }
+            }
+        } catch (Exception e) {
+            MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage("未知错误 详细信息请查看控制台");
+            e.printStackTrace();
+        }
+    }
+    @EventHandler
+    public void GroupSend(MiraiGroupMessageEvent event){
+        String msg = event.getMessage();
+        GoogleTranslateAPI translateAPI = new GoogleTranslateAPI();
+        try {
+            if (msg.startsWith("发送翻译 ")){
+                msg = msg.replace("发送翻译 ","");
+                for (String key : LanguageAPI.map.keySet()){
+                    if (msg.startsWith(key)){
+                        msg = msg.replace(key + " ", "");
+                        String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
+                        MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage(transword);
+                    }
+                }
             }
         } catch (Exception e) {
             MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage("未知错误 详细信息请查看控制台");

@@ -16,19 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoogleTranslateAPI {
-    private static final String PATH="https://translate.googleapis.com/translate_a/single"; //地址
+    //GoogleAPI地址
+    private static final String PATH="https://translate.googleapis.com/translate_a/single";
+    //客户端类型
     private static final String CLIENT="gtx";
-
+    //浏览器协议
     private static final String USER_AGENT="Mozilla/5.0";//"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36";
 
 
 
     private static GoogleTranslateAPI _instance = null;
 
-    /**
-     * 获取单例
-     * @return
-     */
     public static GoogleTranslateAPI getInstance() {
         if( null == _instance){
             _instance = new GoogleTranslateAPI();
@@ -39,19 +37,18 @@ public class GoogleTranslateAPI {
 
 
         String retStr="";
-
+        //初始化
         List<NameValuePair> nvps = new ArrayList();
         nvps.add(new BasicNameValuePair("client", CLIENT));
         nvps.add(new BasicNameValuePair("sl", "auto"));
         nvps.add(new BasicNameValuePair("tl", targetLang));
         nvps.add(new BasicNameValuePair("dt", "t"));
         nvps.add(new BasicNameValuePair("q", text));
-//        String finalPath=PATH +"?client="+CLIENT+"&sl="+sourceLang+"&tl="+targetLang+"&dt=t&q="+ text ;
-
         String resp =  postHttp(PATH,nvps);
         if( null == resp ){
             throw  new Exception("网络异常");
-        };
+        }
+        //解析Json
         retStr = JsonAPI.getTranslateWord(resp);
         return retStr;
     }
@@ -59,12 +56,10 @@ public class GoogleTranslateAPI {
     private String postHttp(String url , List<NameValuePair> nvps){
         String responseStr = null;
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost( url );
-        //重要！！必须设置 http 头，否则返回为乱码
+        HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("User-Agent",USER_AGENT);
         CloseableHttpResponse response2 = null;
         try {
-            // 重要！！ 指定编码，对中文进行编码
             httpPost.setEntity( new UrlEncodedFormEntity(nvps, Charset.forName("UTF-8"))  );
             response2 = httpclient.execute(httpPost);
             HttpEntity entity2 = response2.getEntity();
