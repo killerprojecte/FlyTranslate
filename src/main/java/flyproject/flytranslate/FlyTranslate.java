@@ -2,6 +2,7 @@ package flyproject.flytranslate;
 
 import flyproject.flytranslate.amazingbot.Group;
 import flyproject.flytranslate.amazingbot.Private;
+import flyproject.flytranslate.bukkit.ChatEvent;
 import flyproject.flytranslate.bukkit.TranslateTab;
 import flyproject.flytranslate.bukkit.TCommand;
 import flyproject.flytranslate.miraimc.MGroup;
@@ -20,7 +21,7 @@ public final class FlyTranslate extends JavaPlugin {
                 " / __/ / / /_/ // / / /  / /_/ / / / (__  ) / /_/ / /_/  __/\n" +
                 "/_/   /_/\\__, //_/ /_/   \\__,_/_/ /_/____/_/\\__,_/\\__/\\___/ \n" +
                 "        /____/                                              \n\n" +
-                "(c) Copyright 2021 FlyProject");
+                "(c) Copyright 2021-2022 FlyProject");
         // Plugin startup logic
         getLogger().info("此插件优先选用AmazingBot框架");
         if (Bukkit.getPluginManager().getPlugin("AmazingBot") != null) {
@@ -49,6 +50,8 @@ public final class FlyTranslate extends JavaPlugin {
         getCommand("translate").setExecutor(new TCommand());
         getCommand("transl").setTabCompleter(new TranslateTab());
         getCommand("transl").setExecutor(new TCommand());
+        getLogger().info("注册聊天翻译事件");
+        Bukkit.getPluginManager().registerEvents(new ChatEvent(),this);
     }
 
 
