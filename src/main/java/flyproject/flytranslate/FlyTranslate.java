@@ -8,6 +8,8 @@ import flyproject.flytranslate.bukkit.TranslateTab;
 import flyproject.flytranslate.bukkit.TCommand;
 import flyproject.flytranslate.miraimc.MGroup;
 import flyproject.flytranslate.miraimc.MPrivate;
+import flyproject.flytranslate.spigot.SpigotAmazingBotEvent;
+import flyproject.flytranslate.spigot.SpigotMiraiMCEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,6 +44,16 @@ public final class FlyTranslate extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
+        if (isSpigot()){
+            getLogger().info("检测到服务器正在运行Spigot核心(包括下游) 注册Spigot事件");
+            if (Bukkit.getPluginManager().getPlugin("AmazingBot") != null) {
+                getLogger().info("注册AmazingBot 发送翻译信息事件");
+                Bukkit.getPluginManager().registerEvents(new SpigotAmazingBotEvent(), this);
+            } else if (Bukkit.getPluginManager().getPlugin("MiraiMC") != null) {
+                getLogger().info("注册MiraiMC 发送翻译信息事件");
+                Bukkit.getPluginManager().registerEvents(new SpigotMiraiMCEvent(), this);
+            }
+        }
         getLogger().info("初始化语言列表");
         LanguageAPI.setMap();
         getLogger().info("注册翻译命令");
@@ -62,5 +74,13 @@ public final class FlyTranslate extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+    public static boolean isSpigot() {
+        try {
+            Class.forName("org.bukkit.entity.Player$Spigot");
+            return true;
+        } catch (Throwable tr) {
+            return false;
+        }
     }
 }
