@@ -482,13 +482,13 @@ public class Group implements Listener {
                     event.response("您绑定的账号 " + op.getName() + " 并不在线 请先加入游戏");
                     return;
                 }
-                Player player = Bukkit.getPlayer(uuid);
+                Player player = Bukkit.getPlayer(op.getName());
                 for (String key : LanguageAPI.map.keySet()){
                     if (msg.startsWith(key)){
                         msg = msg.replace(key + " ", "");
                         String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
                         event.response("发送成功");
-                        player.chat(transword);
+                        sendMessage(player,transword);
                         return;
                     }
                 }
@@ -498,5 +498,8 @@ public class Group implements Listener {
             event.response("未知错误 详细信息请查看控制台");
             e.printStackTrace();
         }
+    }
+    public void sendMessage(Player player,String message){
+        player.chat(message);
     }
 }
