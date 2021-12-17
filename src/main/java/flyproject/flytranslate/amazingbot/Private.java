@@ -467,7 +467,7 @@ public class Private implements Listener {
         }
     }
     @EventHandler
-    public void PrivateSend(GroupMessageEvent event){
+    public void PrivateSend(PrivateMessageEvent event){
         String msg = event.getMsg();
         GoogleTranslateAPI translateAPI = new GoogleTranslateAPI();
         try {
