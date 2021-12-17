@@ -1,5 +1,6 @@
 package flyproject.flytranslate.miraimc;
 
+import flyproject.flytranslate.FlyTranslate;
 import flyproject.flytranslate.GoogleTranslateAPI;
 import flyproject.flytranslate.LanguageAPI;
 import me.albert.amazingbot.events.GroupMessageEvent;
@@ -490,7 +491,9 @@ public class MGroup implements Listener {
                         msg = msg.replace(key + " ", "");
                         String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
                         MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage("发送成功");
-                        sendMessage(player,transword);
+                        Bukkit.getScheduler().runTask(new FlyTranslate(),() -> {
+                            sendMessage(player,transword);
+                        });
                         return;
                     }
                 }

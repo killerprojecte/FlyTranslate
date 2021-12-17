@@ -1,5 +1,6 @@
 package flyproject.flytranslate.amazingbot;
 
+import flyproject.flytranslate.FlyTranslate;
 import flyproject.flytranslate.GoogleTranslateAPI;
 import flyproject.flytranslate.LanguageAPI;
 import me.albert.amazingbot.bot.Bot;
@@ -489,7 +490,9 @@ public class Private implements Listener {
                         msg = msg.replace(key + " ", "");
                         String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
                         event.response("发送成功");
-                        sendMessage(player,transword);
+                        Bukkit.getScheduler().runTask(new FlyTranslate(),() -> {
+                            sendMessage(player,transword);
+                        });
                         return;
                     }
                 }
