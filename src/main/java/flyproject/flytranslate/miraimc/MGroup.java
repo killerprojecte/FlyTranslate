@@ -3,15 +3,18 @@ package flyproject.flytranslate.miraimc;
 import flyproject.flytranslate.FlyTranslate;
 import flyproject.flytranslate.GoogleTranslateAPI;
 import flyproject.flytranslate.LanguageAPI;
+import flyproject.flytranslate.bukkit.HoverAPI;
 import me.albert.amazingbot.events.GroupMessageEvent;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.MiraiGroupMessageEvent;
+import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
@@ -490,10 +493,9 @@ public class MGroup implements Listener {
                     if (msg.startsWith(key)){
                         msg = msg.replace(key + " ", "");
                         String transword = translateAPI.translateText(msg, LanguageAPI.map.get(key));
-                        MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage("发送成功");
-                        Bukkit.getScheduler().runTask(new FlyTranslate(),() -> {
-                            sendMessage(player,transword);
-                        });
+                        MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage("请在游戏内点击提示发送信息");
+                        player.spigot().sendMessage(HoverAPI.getClickHoverText("§7[§b翻译§7] §a点击发送信息: " + transword,"§7请确认是否是您的请求",
+                                ClickEvent.Action.RUN_COMMAND,transword));
                         return;
                     }
                 }
@@ -503,8 +505,5 @@ public class MGroup implements Listener {
             MiraiBot.getBot(event.getBotID()).getGroup(event.getGroupID()).sendMessage("未知错误 详细信息请查看控制台");
             e.printStackTrace();
         }
-    }
-    public void sendMessage(Player player,String message){
-        player.chat(message);
     }
 }

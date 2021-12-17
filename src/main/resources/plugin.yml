@@ -11,3 +11,11 @@ commands:
     permission: flytranslate.use
   transl:
     permission: flytranslate.use
+  ftlchatplayersend:
+    permission: flytranslate.system
+    description: 无功能性作用
+permissions:
+  flytranslate.use:
+    default: true
+  flytranslate.system:
+    default: op

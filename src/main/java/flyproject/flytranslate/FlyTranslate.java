@@ -3,6 +3,7 @@ package flyproject.flytranslate;
 import flyproject.flytranslate.amazingbot.Group;
 import flyproject.flytranslate.amazingbot.Private;
 import flyproject.flytranslate.bukkit.ChatEvent;
+import flyproject.flytranslate.bukkit.PlayerChat;
 import flyproject.flytranslate.bukkit.TranslateTab;
 import flyproject.flytranslate.bukkit.TCommand;
 import flyproject.flytranslate.miraimc.MGroup;
@@ -52,6 +53,8 @@ public final class FlyTranslate extends JavaPlugin {
         getCommand("transl").setExecutor(new TCommand());
         getLogger().info("注册聊天翻译事件");
         Bukkit.getPluginManager().registerEvents(new ChatEvent(),this);
+        getLogger().info("正在注册玩家发送信息命令");
+        getCommand("ftlchatplayersend").setExecutor(new PlayerChat());
     }
 
 
